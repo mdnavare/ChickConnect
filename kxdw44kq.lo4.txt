@@ -1,0 +1,31 @@
+﻿Stash
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Alex Mellnik <amellnik@amellnik-DESK.amr.corp.intel.com>
+#
+# On branch temp
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   Mentors.json
+#	new file:   css/chick.css
+#	new file:   css/normalize.css
+#	new file:   css/skeleton.css
+#	new file:   image/1.jpg
+#	new file:   image/alex.jpg
+#	new file:   image/anisha.jpg
+#	new file:   image/geeta.jpg
+#	new file:   image/mentee.jpg
+#	new file:   image/nisha.jpg
+#	new file:   image/shantonu.jpg
+#	new file:   index.html
+#	new file:   main.html
+#	new file:   personality.jpg
+#	new file:   quiz.html
+#
+# Untracked files:
+#	gsqgpfkl.van.txt
+#
+

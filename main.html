@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta charset="utf-8">
+  <title>ChickConnect</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/chick.css">
+  
+  <style>
+    .highlight {
+      background-color: bisque;
+    }
+  </style>
+  
+
+ 
+  
+  <!-- AngularJS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container" ng-app="myApp" ng-controller="myCtrl">
+    <div class="row">
+      <div class="ten columns" style="margin-top: 10%">
+        <h3>Welcome Samantha!</h3>
+        <p>Tell us a bit about what you are interested in and we can help you find a mentor!</p>
+      </div>
+    </div>
+   <form>
+    <div class="row">
+      <div class="four columns">
+        <p>I'm interested in:</p>
+        <div ng-repeat="interest in interests">
+          <label class="profileLable">
+          <input type="checkbox" ng-checked="interestsSelection.indexOf(interest) > -1" ng-click="interestsToggle(interest)">
+            <span class="label-body">{{interest}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="four columns">
+        <p style="margin: 0px">My personality type is:</p>
+        <p>(<a href="quiz.html"  target="_blank">Take the quiz!</a>)</p>
+        <div ng-repeat="personality in personalities">
+          <label class="profileLabel">
+          <input type="checkbox" ng-checked="personalitiesSelection.indexOf(personality) > -1" ng-click="personalitiesToggle(personality)">
+            <span class="label-body">{{personality}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="four columns">
+        <p style="margin: 0px">My learning type is:</p>
+        <p>(<a href="http://www.educationplanner.org/students/self-assessments/learning-styles-quiz.shtml"  target="_blank">Take the quiz!</a>)</p>
+         <div ng-repeat="learningType in learningTypes">
+          <label class="profileLabel">
+          <input type="checkbox" ng-checked="learningTypesSelection.indexOf(learningType) > -1" ng-click="learningTypesToggle(learningType)">
+            <span class="label-body">{{learningType}}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  <input class="button-primary" type="submit" value="Find Mentors" ng-click="findMentors()">
+</form>
+<div class="row">
+  <div class="ten columns">
+    <div ng-repeat="mentor in mentors">
+      <div class="mentorblock">
+        <h5>{{mentor.name}}</h5>
+        <p><img src="{{mentor.pic}}" style="float:right;width:80px;height:80px"/></p>
+        <p><span>Interests: </span><span ng-repeat="interest in mentor.interests">{{interest}} </span></p>
+        <p><span>Mentoring styles: </span><span ng-repeat="learningType in mentor.learningTypes">{{learningType}} </span></p>
+        <p><span>Personality types: </span><span ng-repeat="personality in mentor.personalities">{{personality}} </span></p>
+        <p><a href="mailto:{{mentor.email}}?subject=New ChickConnect Mentee!&amp;body=Hello {{mentor.name}}, &#14; &#14; My name is Samantha and I was wondering if you might be able to mentor me.  My interests are  {{arrayToString(mentor.interests)}}.  Thanks for your time, &#14; &#14;Samantha">Contact me!</a></p>
+      </div><p/>
+      
+    </div>
+  </div>
+</div>
+  </div>
+  
+  <!-- Scrips below here
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+      $scope.interests=[
+        'Robotics',
+        'Art',
+        'Career Development',
+        'Academic Advice',
+        'Science Projects',
+        'Web Development',
+        'Math',
+        '3D Printing',
+        'Programming'
+      ]; 
+      $scope.personalities=[
+        'Enthusiast',
+        'Challenger',
+        'Individualist',
+        'Achiever',
+        'Helper'
+      ];
+      $scope.learningTypes=[
+        'Visual',
+        'Auditory',
+        'Tactile'
+      ]; 
+      $scope.interestsSelection=[];
+      $scope.personalitiesSelection=[];
+      $scope.learningTypesSelection=[];
+      $scope.mentors = [];
+      //Toggle selection for interests
+      $scope.interestsToggle = function interestsToggle(intr) {
+        var idx = $scope.interestsSelection.indexOf(intr);
+
+        if (idx >= 0) {
+          $scope.interestsSelection.splice(idx,1);
+        } else {
+          $scope.interestsSelection.push(intr);
+        }
+      };
+      $scope.personalitiesToggle = function personalitiesToggle(intr) {
+        var idx = $scope.personalitiesSelection.indexOf(intr);
+
+        if (idx >= 0) {
+          $scope.personalitiesSelection.splice(idx,1);
+        } else {
+          $scope.personalitiesSelection.push(intr);
+        }
+      };
+      $scope.learningTypesToggle = function learningTypesToggle(intr) {
+        var idx = $scope.learningTypesSelection.indexOf(intr);
+
+        if (idx >= 0) {
+          $scope.learningTypesSelection.splice(idx,1);
+        } else {
+          $scope.learningTypesSelection.push(intr);
+        }
+      };
+      $scope.arrayToString = function(string){
+    return string.join(", ");
+      };
+      
+      
+      
+      $scope.findMentors = function() {
+      	$http.get('Mentors.json')
+       	.then(function(res){
+		mentors = res.data;
+		var interest_mentors = [];
+		var personality_mentors = [];
+		var style_mentors = [];
+		if ( $scope.interestsSelection.length > 0){
+			for (i = 0; i < mentors.length; i++){
+				matches = 0;
+				for (j = 0; j < mentors[i].interests.length; j++){
+					for(k = 0; k < $scope.interestsSelection.length; k++){
+						if($scope.interestsSelection[k] == mentors[i].interests[j]){
+							matches = matches + 1;
+						}
+					}
+				}
+
+				if ( matches > 0){
+
+					interest_mentors.push(mentors[i]);
+
+				
+				}
+
+			}
+		}
+		else {
+			for(i=0; i<mentors.length; i++){
+				interest_mentors.push(mentors[i]);
+			}
+		}
+		if ( $scope.personalitiesSelection.length > 0){
+			for (i = 0; i < interest_mentors.length; i++){
+				matches = 0;
+				for (j = 0; j < interest_mentors[i].personalities.length; j++){
+					for(k = 0; k < $scope.personalitiesSelection.length; k++){
+						if($scope.personalitiesSelection[k] == interest_mentors[i].personalities[j]){
+							matches = matches + 1;
+						}
+					}
+				}
+
+				if ( matches > 0){
+
+					personality_mentors.push(interest_mentors[i]);
+
+				
+				}
+
+			}
+		}
+		else {
+			for(i=0; i<interest_mentors.length; i++){
+				personality_mentors.push(interest_mentors[i]);
+			}
+		}
+		if ( $scope.learningTypesSelection.length > 0){
+			for (i = 0; i < personality_mentors.length; i++){
+				matches = 0;
+				for (j = 0; j < personality_mentors[i].learningTypes.length; j++){
+					for(k = 0; k < $scope.learningTypesSelection.length; k++){
+						if($scope.learningTypesSelection[k] == personality_mentors[i].learningTypes[j]){
+							matches = matches + 1;
+						}
+					}
+				}
+
+				if ( matches > 0){
+
+					style_mentors.push(personality_mentors[i]);
+
+				
+				}
+
+			}
+		}
+		else {
+			for (i=0; i< personality_mentors.length; i++){
+				style_mentors.push(personality_mentors[i])
+			}
+		}
+		$scope.mentors = style_mentors;
+        });
+        
+      };
+      
+  
+    });
+  </script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

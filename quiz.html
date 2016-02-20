@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta charset="utf-8">
+  <title>Quiz</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  
+  <style>
+    .highlight {
+      background-color: bisque;
+    }
+  </style>
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  
+  <!-- AngularJS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container" ng-app="myApp" ng-controller="myCtrl">
+    <div class="row">
+      <div class="eight columns" style="margin-top: 10%">
+        <h3 >Know your Personality Type!</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        
+		<p> Which one of these would you most likely do on a weekend?</p>
+	<select id = "Question1">
+		<option value="1">Go on a hike</option>
+		<option value="2">Play a competetive sport</option>
+		<option value="3">Read a book</option>
+		<option value="4">Learn and master something new</option>
+		<option value="5">Volunteer at an event</option>
+	</select>
+	<p> Choose one:</p>
+	<select id = "Question2">
+		<option value="1">I love to stay busy and involved in fun activities</option>
+		<option value="2">I love to go on a new adventure on every outing</option>
+		<option value="3">I love to get my own space at school</option>
+		<option value="4">I am in it to win it!</option>
+		<option value="5">I love to collaborate and be a part of a team</option>
+	</select>
+	<p> How would you behave in a big group of friends:</p>
+	<select id = "Question3">
+		<option value="1">You are the light of the party</option>
+		<option value="2">You are the one proposing new fun activities to your friends </option>
+		<option value="3">After prolonged socializing you feel you need to get away and be alone</option>
+		<option value="4">You enjoy having a wide circle of acquaintances</option>
+		<option value="5">You make sure everyone is having a good time</option>
+	</select>
+        <div>
+        <button type="button" class="button-primary" onclick="CalculatePersonality()">Show me my personality</button>
+		<p id="demo"></p>
+    </div>
+	</div>
+	
+      <div class="four columns">
+      <img src="personality.jpg" height="256" width="256" >
+	
+  </div>
+      </div>
+    
+  
+  <!-- Scrips below here
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ 
+<script type='text/javascript'>
+var mode = function mode(arr) {
+    var numMapping = {};
+    var greatestFreq = 0;
+    var mode;
+    arr.forEach(function findMode(number) {
+        numMapping[number] = (numMapping[number] || 0) + 1;
+        if (greatestFreq < numMapping[number]) {
+            greatestFreq = numMapping[number];
+            mode = number;
+        }
+    });
+    return +mode;
+}
+var get_personality_from_hash = function get_personality_from_hash(value)
+{
+    var arr2 = [];
+    arr2[1] = "Enthusiast";
+	arr2[2] = "Challenger";
+	arr2[3] = "Individualist";
+	arr2[4] = "Achiever";
+	arr2[5] = "Helper";
+	return arr2[value];
+}
+function CalculatePersonality() {
+    var question1 = document.getElementById("Question1").value;
+	var question2 = document.getElementById("Question2").value;
+	var question3 = document.getElementById("Question3").value;
+	var arr = [];
+	arr.push(question1);
+	arr.push(question2);
+	arr.push(question3);
+	personality_key = mode(arr);
+	personality_type = get_personality_from_hash(personality_key);
+    document.getElementById("demo").innerHTML = "You are: " + personality_type;
+}
+</script>
+  
+  
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
